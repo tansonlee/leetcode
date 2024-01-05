@@ -1,5 +1,3 @@
-
-
 # Determine how many palindromic subsequences of length k in s
 def solve(s, k):
 	if k == 0:

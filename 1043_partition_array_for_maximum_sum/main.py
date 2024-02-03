@@ -2,6 +2,17 @@ from functools import cache
 
 class Solution:
     def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+        dp = [0 for _ in range(len(arr))]
+
+        for i in range(k):
+            dp[i] = max(arr[:i+1]) * (i + 1)
+        for i in range(k, len(arr)):
+            for j in range(max(0, i - k + 1), i):
+                dp[i] = max(dp[i], dp[j - 1] + max(arr[j:i + 1]) * (i - j + 1))
+            dp[i] = max(dp[i], dp[i - 1] + arr[i])
+
+        return dp[-1]
+
         @cache
         def helper2(start):
             if start == len(arr):

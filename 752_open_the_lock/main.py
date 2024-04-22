@@ -1,32 +1,30 @@
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
+        def neighbors(s):
+            res = []
+            sep = list(map(int, list(curr)))
+            for i in range(len(s)):
+                sep[i] = (sep[i] + 1) % 10
+                res.append(("".join(map(str, sep)), depth + 1))
+                sep[i] = (sep[i] - 2) % 10
+                res.append(("".join(map(str, sep)), depth + 1))
+                sep[i] = (sep[i] + 1) % 10
+            return res
+        
         deadends = set(deadends)
-
         q = collections.deque([("0000", 0)])
         visited = set()
 
         while q:
             curr, depth = q.popleft()
-            if curr in deadends:
-                continue
-            if curr in visited:
+            if curr in deadends or curr in visited:
                 continue
             if curr == target:
                 return depth
             visited.add(curr)
             
-            # try incrementing each
-            sep = list(map(int, list(curr)))
-            for i in range(len(sep)):
-                sep[i] = (sep[i] + 1) % 10
-                s = "".join(map(str, sep))
-                q.append((s, depth + 1))
-                sep[i] = (sep[i] - 1) % 10
-
-                sep[i] = (sep[i] - 1) % 10
-                s = "".join(map(str, sep))
-                q.append((s, depth + 1))
-                sep[i] = (sep[i] + 1) % 10
-        
+            for n in neighbors(curr):
+                q.append(n)
+                
         return -1
 

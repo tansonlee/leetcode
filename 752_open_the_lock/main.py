@@ -2,12 +2,12 @@ class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
         def neighbors(s):
             res = []
-            sep = list(map(int, list(curr)))
+            sep = list(map(int, list(s)))
             for i in range(len(s)):
                 sep[i] = (sep[i] + 1) % 10
-                res.append(("".join(map(str, sep)), depth + 1))
+                res.append("".join(map(str, sep)))
                 sep[i] = (sep[i] - 2) % 10
-                res.append(("".join(map(str, sep)), depth + 1))
+                res.append("".join(map(str, sep)))
                 sep[i] = (sep[i] + 1) % 10
             return res
         
@@ -24,7 +24,7 @@ class Solution:
             visited.add(curr)
             
             for n in neighbors(curr):
-                q.append(n)
+                q.append((n, depth + 1))
                 
         return -1
 
